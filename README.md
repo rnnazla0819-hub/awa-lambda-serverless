@@ -12,8 +12,8 @@ A simple serverless API. A static web page stored in Amazon S3 calls an Amazon A
 Browser -> S3 static page -> API Gateway (GET /hello) -> Lambda function -> JSON response
 ```
 
-**Live website:** `<your S3 website endpoint>/serverless.html`
-**API endpoint:** `<your API Gateway invoke URL>/hello?name=Nazla`
+**Live website:** `http://nazla-portfolio-2026.s3-website-ap-southeast-2.amazonaws.com/serverless.html`
+**API endpoint:** `https://5lltmo9ay2.execute-api.ap-southeast-2.amazonaws.com/hello?name=Nazla`
 
 ## Objectives covered
 
