@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serverless API | Nazla</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f6f3f7; color: #1f2937; line-height: 1.6; }
+    header { background: #8b1d45; color: #fff; padding: 48px 20px; text-align: center; }
+    header p { opacity: .9; margin-top: 8px; }
+    main { max-width: 760px; margin: 0 auto; padding: 24px 20px; }
+    section { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    h2 { color: #8b1d45; margin-bottom: 12px; font-size: 1.15rem; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    input { flex: 1; min-width: 180px; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }
+    button { background: #8b1d45; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #6e1636; }
+    pre { background: #1f2937; color: #e5e7eb; padding: 14px; border-radius: 8px; margin-top: 12px; overflow-x: auto; white-space: pre-wrap; }
+    ol { padding-left: 20px; }
+    li { margin-bottom: 6px; }
+    footer { text-align: center; padding: 20px; color: #6b7280; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Serverless API demo</h1>
+    <p>Amazon S3 &rarr; API Gateway &rarr; AWS Lambda</p>
+    <p>Raheem Noorul Nazla &middot; AWS Cloud &amp; DevOps Intern, Codomax Digital Solutions</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Say hello to Lambda</h2>
+      <div class="row">
+        <input id="name" type="text" placeholder="Type your name" maxlength="40">
+        <button id="go">Call API</button>
+      </div>
+      <pre id="out">The response will appear here.</pre>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <ol>
+        <li>This page is a static file stored in an Amazon S3 bucket.</li>
+        <li>The button sends a GET request to an Amazon API Gateway HTTP API.</li>
+        <li>API Gateway triggers an AWS Lambda function written in Python.</li>
+        <li>Lambda returns a JSON message, shown above.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>Module 05 &middot; AWS Lambda &amp; Serverless</footer>
+
+  <script>
+    // Replace with your own API Gateway invoke URL, including the route, e.g.
+    // https://abc123.execute-api.ap-southeast-2.amazonaws.com/hello
+    const API_URL = 'https://5lltmo9ay2.execute-api.ap-southeast-2.amazonaws.com/hello';
+
+    const out = document.getElementById('out');
+    document.getElementById('go').addEventListener('click', async () => {
+      const name = document.getElementById('name').value.trim() || 'friend';
+      if (API_URL.startsWith('PASTE')) {
+        out.textContent = 'Set API_URL in this file first.';
+        return;
+      }
+      out.textContent = 'Calling the API...';
+      try {
+        const res = await fetch(API_URL + '?name=' + encodeURIComponent(name));
+        const data = await res.json();
+        out.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        out.textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
